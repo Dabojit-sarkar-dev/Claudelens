@@ -7,10 +7,17 @@ import {
   Target,
   GraduationCap,
 } from "lucide-react";
+import { PublicNavbar } from "@/components/layout/public-navbar";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function AboutPage() {
+  const { isAuthenticated } = useAuth();
+
   return (
-    <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#0b0f19] text-white flex flex-col">
+      {!isAuthenticated && <PublicNavbar />}
+      <main className="flex-1 py-8 px-4 sm:px-6">
+        <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
       {/* Profile Banner Card - Centered Large Picture & Info */}
       <div className="glass-card-static p-8 sm:p-10 relative overflow-hidden text-center">
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none" />
@@ -202,5 +209,7 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
-  );
+  </main>
+</div>
+);
 }

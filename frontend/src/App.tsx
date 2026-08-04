@@ -1,13 +1,16 @@
 import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
-import { AuthProvider } from "./contexts/auth-context";
+import { AuthProvider, useAuth } from "./contexts/auth-context";
 
 // Layouts
 import { AppLayout } from "./components/layout/app-layout";
 import { ProtectedRoute } from "./components/layout/protected-route";
 
 // Pages
+import LandingPage from "./pages/landing";
+import DocsPage from "./pages/docs";
+import AboutPage from "./pages/about";
 import LoginPage from "./pages/login";
 import SignupPage from "./pages/signup";
 import DashboardPage from "./pages/dashboard";
@@ -15,7 +18,6 @@ import ContractsPage from "./pages/contracts";
 import ContractDetailPage from "./pages/contract-detail";
 import FindingDetailPage from "./pages/finding-detail";
 import EvaluationsPage from "./pages/evaluations";
-import AboutPage from "./pages/about";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,7 +28,25 @@ const queryClient = new QueryClient({
   },
 });
 
+function HomeRoute() {
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return null;
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />;
+}
+
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeRoute />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
+  },
+  {
+    path: "/docs",
+    element: <DocsPage />,
+  },
   {
     path: "/login",
     element: <LoginPage />,
@@ -36,7 +56,7 @@ const router = createBrowserRouter([
     element: <SignupPage />,
   },
   {
-    path: "/",
+    path: "/dashboard",
     element: (
       <ProtectedRoute>
         <AppLayout />
@@ -63,15 +83,11 @@ const router = createBrowserRouter([
         path: "evaluations",
         element: <EvaluationsPage />,
       },
-      {
-        path: "about",
-        element: <AboutPage />,
-      },
-      {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
   },
 ]);
 

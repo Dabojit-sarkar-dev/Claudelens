@@ -7,14 +7,16 @@ import {
   LogOut,
   Shield,
   Info,
+  BookOpen,
 } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/", icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/contracts", icon: FileText, label: "Contracts" },
-  { to: "/evaluations", icon: BarChart3, label: "Evaluations" },
+  { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { to: "/dashboard/contracts", icon: FileText, label: "Contracts" },
+  { to: "/dashboard/evaluations", icon: BarChart3, label: "Evaluations" },
+  { to: "/docs", icon: BookOpen, label: "Docs" },
   { to: "/about", icon: Info, label: "About" },
 ];
 
@@ -31,7 +33,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-white/8 bg-[#0b0f19]/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Left: Brand Logo */}
-        <NavLink to="/" className="flex items-center gap-3 group">
+        <NavLink to="/dashboard" className="flex items-center gap-3 group">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
             <Shield className="h-5 w-5 text-white" />
           </div>
@@ -47,7 +49,7 @@ export function Navbar() {
               <NavLink
                 key={item.to}
                 to={item.to}
-                end={item.to === "/"}
+                end={item.to === "/dashboard"}
                 className={({ isActive }) =>
                   cn(
                     "flex items-center gap-2 rounded-xl px-3 py-2 text-xs sm:text-sm font-medium transition-all duration-200",
