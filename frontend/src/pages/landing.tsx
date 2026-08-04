@@ -20,6 +20,15 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative pt-16 sm:pt-24 pb-20 overflow-hidden">
+        {/* Background Large Watermark Logo */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+          <img
+            src="/clauselens.png"
+            alt=""
+            className="w-[550px] h-[550px] sm:w-[750px] sm:h-[750px] object-contain opacity-[0.09] scale-110 select-none filter drop-shadow-[0_0_80px_rgba(99,102,241,0.25)]"
+          />
+        </div>
+
         {/* Background Glowing Gradients */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-600/20 via-violet-600/20 to-purple-600/20 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute top-10 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />

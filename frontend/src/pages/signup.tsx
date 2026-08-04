@@ -68,7 +68,12 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       {/* Background decorative elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none flex items-center justify-center">
+        <img
+          src="/clauselens.png"
+          alt=""
+          className="w-[500px] h-[500px] sm:w-[650px] sm:h-[650px] object-contain opacity-[0.06] select-none filter drop-shadow-[0_0_80px_rgba(99,102,241,0.2)]"
+        />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-indigo-600/10 blur-[128px]" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-violet-600/10 blur-[128px]" />
       </div>
