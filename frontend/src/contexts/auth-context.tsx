@@ -6,6 +6,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import type { User } from "@/types/api";
 import { login as apiLogin, signup as apiSignup, loginWithOAuth as apiLoginOAuth, getMe } from "@/api/auth";
 
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   // On mount, try to hydrate user from stored token
   useEffect(() => {
@@ -36,35 +38,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(setUser)
       .catch(() => {
         localStorage.removeItem("token");
+        queryClient.clear();
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [queryClient]);
 
   const login = useCallback(async (email: string, password: string) => {
+    queryClient.clear();
     const tokenRes = await apiLogin({ email, password });
     localStorage.setItem("token", tokenRes.access_token);
     const me = await getMe();
     setUser(me);
-  }, []);
+  }, [queryClient]);
 
   const signup = useCallback(async (email: string, password: string, fullName: string) => {
+    queryClient.clear();
     const tokenRes = await apiSignup({ email, password, full_name: fullName });
     localStorage.setItem("token", tokenRes.access_token);
     const me = await getMe();
     setUser(me);
-  }, []);
+  }, [queryClient]);
 
   const loginWithOAuth = useCallback(async (provider: "google" | "github", email: string, fullName?: string) => {
+    queryClient.clear();
     const tokenRes = await apiLoginOAuth({ provider, email, full_name: fullName });
     localStorage.setItem("token", tokenRes.access_token);
     const me = await getMe();
     setUser(me);
-  }, []);
+  }, [queryClient]);
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
+    queryClient.clear();
     setUser(null);
-  }, []);
+  }, [queryClient]);
 
   return (
     <AuthContext.Provider
