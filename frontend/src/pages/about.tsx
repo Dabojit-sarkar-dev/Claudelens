@@ -1,5 +1,4 @@
 import {
-  User,
   Mail,
   Globe,
   Code2,
@@ -12,30 +11,36 @@ import {
 export default function AboutPage() {
   return (
     <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
-      {/* Profile Banner Card */}
-      <div className="glass-card-static p-8 relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
-        <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10 text-center sm:text-left">
-          {/* Avatar Icon */}
-          <div className="h-24 w-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 p-0.5 shadow-xl shadow-indigo-500/20 shrink-0">
-            <div className="h-full w-full rounded-[14px] bg-[#0d111d] flex items-center justify-center">
-              <User className="h-10 w-10 text-indigo-400" />
-            </div>
+      {/* Profile Banner Card - Centered Large Picture & Info */}
+      <div className="glass-card-static p-8 sm:p-10 relative overflow-hidden text-center">
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col items-center gap-6 relative z-10">
+          {/* Centered Extra Large Profile Picture */}
+          <div className="h-44 w-44 sm:h-56 sm:w-56 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 p-1.5 shadow-2xl shadow-indigo-500/30 shrink-0 transform hover:scale-105 transition-transform duration-300">
+            <img
+              src="/aboutpic.jpg"
+              alt="Dabojit Sarkar"
+              className="h-full w-full rounded-full object-cover object-center border-4 border-[#0b0f19]"
+            />
           </div>
 
-          <div className="space-y-2 flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium">
-              <Sparkles className="h-3.5 w-3.5" />
+          <div className="space-y-3 max-w-xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold">
+              <Sparkles className="h-4 w-4 text-indigo-400" />
               Founder & Creator
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+
+            <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
               Dabojit Sarkar
             </h1>
-            <p className="text-sm font-medium text-slate-300">
-              Founder & Founder Lead · AI/ML Engineer
+
+            <p className="text-base font-medium text-slate-300">
+              Founder & Lead · AI/ML Engineer
             </p>
-            <p className="text-xs text-slate-400 flex items-center justify-center sm:justify-start gap-1">
-              <GraduationCap className="h-3.5 w-3.5 text-indigo-400" />
+
+            <p className="text-sm text-slate-400 flex items-center justify-center gap-2 pt-1">
+              <GraduationCap className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
               CSE Undergraduate · Artificial Intelligence & Machine Learning
             </p>
           </div>
