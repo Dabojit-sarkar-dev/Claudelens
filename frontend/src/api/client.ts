@@ -2,9 +2,6 @@ import axios, { AxiosError } from "axios";
 
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/v1",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 apiClient.interceptors.request.use((config) => {
@@ -30,14 +27,22 @@ apiClient.interceptors.response.use(
 
 export function extractApiError(err: unknown): string {
   if (err instanceof AxiosError) {
-    if (typeof err.response?.data?.detail === "string") {
-      return err.response.data.detail;
+    const data = err.response?.data;
+    if (data?.error?.message) {
+      return data.error.message;
     }
-    if (Array.isArray(err.response?.data?.detail)) {
-      return err.response.data.detail[0]?.msg || "An error occurred";
+    if (typeof data?.detail === "string") {
+      return data.detail;
     }
-    return err.response?.data?.message || err.message;
+    if (Array.isArray(data?.detail)) {
+      return data.detail[0]?.msg || "Validation error";
+    }
+    if (data?.message) {
+      return data.message;
+    }
+    return err.message || "Network Request Error";
   }
   if (err instanceof Error) return err.message;
   return "An unexpected error occurred";
 }
+

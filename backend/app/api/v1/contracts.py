@@ -1,7 +1,7 @@
 import io
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, Query, UploadFile
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session, joinedload
 
@@ -20,6 +20,7 @@ from app.schemas import (
     ReprocessResponse,
 )
 from app.services.citations import finding_to_schema
+from app.services.extractor import process_contract
 from app.services.storage import complete_processing_run, paginate, parse_date_filter, page_signed_url, save_upload
 
 router = APIRouter()
@@ -41,6 +42,7 @@ def _summary(doc: DocumentORM) -> ContractSummary:
 
 @router.post("", status_code=202, response_model=ContractUploadResponse)
 async def upload_contract(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     workspace_id: str = Form(...),
     title: Optional[str] = Form(None),
@@ -81,8 +83,7 @@ async def upload_contract(
     if get_settings().use_mock_api:
         complete_processing_run(db, run_id)
     else:
-        # Synchronous lightweight processing for local dev (no external queue)
-        complete_processing_run(db, run_id)
+        background_tasks.add_task(process_contract, run_id)
 
     return ContractUploadResponse(document_id=document_id, status="uploaded", run_id=run_id)
 
@@ -247,6 +248,7 @@ def stream_page(
 @router.post("/{contract_id}/reprocess", response_model=ReprocessResponse)
 def reprocess_contract(
     contract_id: str,
+    background_tasks: BackgroundTasks,
     user: UserORM = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ReprocessResponse:
@@ -258,5 +260,5 @@ def reprocess_contract(
     doc.updated_at = utcnow()
     db.add(run)
     db.commit()
-    complete_processing_run(db, run_id)
-    return ReprocessResponse(document_id=contract_id, run_id=run_id, status="completed")
+    background_tasks.add_task(process_contract, run_id)
+    return ReprocessResponse(document_id=contract_id, run_id=run_id, status="processing")

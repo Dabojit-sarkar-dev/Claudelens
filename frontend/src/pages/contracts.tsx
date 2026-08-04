@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import {
   Search,
   Upload,
@@ -225,19 +226,26 @@ function UploadModal({ onClose }: { onClose: () => void }) {
   const upload = useUploadContract();
 
   // Auto-select first workspace
-  if (!workspaceId && workspaces && workspaces.length > 0) {
-    setWorkspaceId(workspaces[0].id);
-  }
+  useEffect(() => {
+    if (!workspaceId && workspaces && workspaces.length > 0) {
+      setWorkspaceId(workspaces[0].id);
+    }
+  }, [workspaceId, workspaces]);
+
+  const effectiveWorkspaceId = workspaceId || workspaces?.[0]?.id || "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !workspaceId) return;
+    if (!file || !effectiveWorkspaceId) {
+      toast.error("Please select a file and a workspace");
+      return;
+    }
 
     try {
       await upload.mutateAsync({
         file,
-        workspaceId,
-        title: title || undefined,
+        workspaceId: effectiveWorkspaceId,
+        title: title.trim() || undefined,
       });
       toast.success("Contract uploaded successfully");
       onClose();
@@ -245,6 +253,7 @@ function UploadModal({ onClose }: { onClose: () => void }) {
       toast.error(extractApiError(err));
     }
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">

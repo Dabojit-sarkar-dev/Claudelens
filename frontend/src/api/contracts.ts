@@ -33,13 +33,14 @@ export async function uploadContract(
   form.append("workspace_id", workspaceId);
   if (title) form.append("title", title);
 
-  const res = await apiClient.post<Contract>(
-    "/contracts",
-    form,
-    { headers: { "Content-Type": "multipart/form-data" } },
-  );
+  const res = await apiClient.post<Contract>("/contracts", form, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 }
+
 
 export async function listContractFindings(
   contractId: string,

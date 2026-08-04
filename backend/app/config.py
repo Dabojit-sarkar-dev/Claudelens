@@ -1,5 +1,5 @@
 from functools import lru_cache
-from typing import List
+from typing import List, Optional
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -19,6 +19,9 @@ class Settings(BaseSettings):
         validation_alias="DATABASE_URL",
     )
     use_mock_api: bool = Field(default=False, validation_alias="USE_MOCK_API")
+    gemini_api_key: Optional[str] = Field(default=None, validation_alias="GEMINI_API_KEY")
+    groq_api_key: Optional[str] = Field(default=None, validation_alias="GROQ_API_KEY")
+    ollama_url: str = Field(default="http://localhost:11434", validation_alias="OLLAMA_URL")
 
     frontend_origins: str = Field(
         default="http://localhost:3000,http://localhost:5173",
