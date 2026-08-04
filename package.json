@@ -1,0 +1,10 @@
+{
+  "name": "clauselens-integration",
+  "private": true,
+  "scripts": {
+    "generate-api": "node scripts/generate-api.mjs"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.6.1"
+  }
+}

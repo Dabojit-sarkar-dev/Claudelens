@@ -1,0 +1,7 @@
+__pycache__/
+.venv/
+*.pyc
+.env
+backend/storage/
+node_modules/
+frontend/src/types/api.generated.ts
