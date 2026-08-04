@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/dashboard/contracts", icon: FileText, label: "Contracts" },
-  { to: "/dashboard/evaluations", icon: BarChart3, label: "Evaluations" },
+  { to: "/contracts", icon: FileText, label: "Contracts" },
+  { to: "/evaluations", icon: BarChart3, label: "Evaluations" },
   { to: "/docs", icon: BookOpen, label: "Docs" },
   { to: "/about", icon: Info, label: "About" },
 ];

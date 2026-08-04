@@ -24,6 +24,12 @@ async def get_current_user(
 
 def user_workspace_ids(db: Session, user_id: str) -> List[str]:
     rows = db.query(WorkspaceMemberORM.workspace_id).filter(WorkspaceMemberORM.user_id == user_id).all()
+    if not rows:
+        user = db.query(UserORM).filter(UserORM.id == user_id).first()
+        if user:
+            from app.api.v1.auth import create_personal_workspace
+            ws = create_personal_workspace(db, user)
+            return [ws.id]
     return [r[0] for r in rows]
 
 
