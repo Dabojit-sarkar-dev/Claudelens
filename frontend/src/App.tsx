@@ -15,6 +15,7 @@ import ContractsPage from "./pages/contracts";
 import ContractDetailPage from "./pages/contract-detail";
 import FindingDetailPage from "./pages/finding-detail";
 import EvaluationsPage from "./pages/evaluations";
+import AboutPage from "./pages/about";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "evaluations",
         element: <EvaluationsPage />,
+      },
+      {
+        path: "about",
+        element: <AboutPage />,
       },
       {
         path: "*",
