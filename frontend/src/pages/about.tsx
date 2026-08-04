@@ -41,7 +41,7 @@ export default function AboutPage() {
 
             <p className="text-sm text-slate-400 flex items-center justify-center gap-2 pt-1">
               <GraduationCap className="h-4.5 w-4.5 text-indigo-400 shrink-0" />
-              CSE Undergraduate · Artificial Intelligence & Machine Learning
+              B.Tech CSE Undergrad (Final Year) · Kalinga Institute of Industrial Technology
             </p>
           </div>
         </div>
@@ -100,6 +100,73 @@ export default function AboutPage() {
               <Mail className="h-4 w-4 text-violet-400 group-hover:text-violet-300 transition-colors" />
               <span className="truncate">debsarkards2002@gmail.com</span>
             </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Educational Background Section */}
+      <div className="glass-card-static p-6 space-y-6">
+        <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+          <GraduationCap className="h-5 w-5 text-indigo-400" />
+          Education & Academic Background
+        </h2>
+
+        <div className="relative border-l-2 border-indigo-500/20 ml-3 pl-6 space-y-6">
+          {/* University */}
+          <div className="relative group">
+            <div className="absolute -left-[31px] top-1.5 h-3.5 w-3.5 rounded-full bg-indigo-500 border-4 border-[#0b0f19] group-hover:scale-125 transition-transform" />
+            <div className="space-y-1">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-base font-semibold text-white">
+                  Kalinga Institute of Industrial Technology (KIIT)
+                </h3>
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+                  Final Year Undergrad
+                </span>
+              </div>
+              <p className="text-sm font-medium text-slate-300">
+                Bachelor of Technology (B.Tech) in Computer Science & Engineering (CSE)
+              </p>
+              <p className="text-xs text-slate-400">
+                Specialization in Artificial Intelligence, Machine Learning & Software Systems
+              </p>
+            </div>
+          </div>
+
+          {/* College */}
+          <div className="relative group">
+            <div className="absolute -left-[31px] top-1.5 h-3.5 w-3.5 rounded-full bg-violet-500 border-4 border-[#0b0f19] group-hover:scale-125 transition-transform" />
+            <div className="space-y-1">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-base font-semibold text-white">
+                  Notre Dame College
+                </h3>
+                <span className="text-xs font-medium text-slate-400">
+                  11th & 12th Grade
+                </span>
+              </div>
+              <p className="text-sm font-medium text-slate-300">
+                Higher Secondary Certificate (HSC) · Science Stream
+              </p>
+            </div>
+          </div>
+
+          {/* School */}
+          <div className="relative group">
+            <div className="absolute -left-[31px] top-1.5 h-3.5 w-3.5 rounded-full bg-slate-500 border-4 border-[#0b0f19] group-hover:scale-125 transition-transform" />
+            <div className="space-y-1">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-base font-semibold text-white">
+                  St. Gregory's High School & College
+                </h3>
+                <span className="text-xs font-medium text-slate-400">
+                  Secondary Schooling
+                </span>
+              </div>
+              <p className="text-sm font-medium text-slate-300">
+                Secondary School Certificate (SSC)
+              </p>
+            </div>
           </div>
         </div>
       </div>
