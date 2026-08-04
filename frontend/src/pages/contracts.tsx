@@ -330,15 +330,21 @@ function UploadModal({ onClose }: { onClose: () => void }) {
               Workspace
             </label>
             <select
-              value={workspaceId}
+              value={effectiveWorkspaceId}
               onChange={(e) => setWorkspaceId(e.target.value)}
-              className="input-field"
+              className="input-field cursor-pointer"
             >
-              {workspaces?.map((ws) => (
-                <option key={ws.id} value={ws.id}>
-                  {ws.name}
+              {workspaces && workspaces.length > 0 ? (
+                workspaces.map((ws) => (
+                  <option key={ws.id} value={ws.id} className="bg-[#181824] text-slate-100">
+                    {ws.name}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled className="bg-[#181824] text-slate-400">
+                  Select Workspace…
                 </option>
-              ))}
+              )}
             </select>
           </div>
 

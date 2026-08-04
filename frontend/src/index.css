@@ -108,6 +108,11 @@ body {
   color: oklch(0.5 0.01 270);
 }
 
+select.input-field option {
+  background-color: oklch(0.18 0.02 270);
+  color: oklch(0.95 0 0);
+}
+
 /* ─── Button Base ────────────────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;
