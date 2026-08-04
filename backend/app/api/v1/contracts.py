@@ -106,7 +106,10 @@ def list_contracts(
             items=[], meta=PaginatedMeta(page=page, page_size=page_size, total=0, total_pages=0)
         )
 
-    q = db.query(DocumentORM).filter(DocumentORM.workspace_id.in_(allowed))
+    q = db.query(DocumentORM).filter(
+        DocumentORM.workspace_id.in_(allowed),
+        DocumentORM.owner_id == user.id,
+    )
     if status:
         q = q.filter(DocumentORM.status == status)
     if risk_level:

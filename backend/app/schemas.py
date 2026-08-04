@@ -69,6 +69,19 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class SignupRequest(BaseModel):
+    email: str
+    password: str
+    full_name: str
+
+
+class OAuthLoginRequest(BaseModel):
+    provider: Literal["google", "github"]
+    email: str
+    full_name: Optional[str] = None
+    token: Optional[str] = None
+
+
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"

@@ -2,13 +2,21 @@ import { useState } from "react";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Shield, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
-import { loginSchema, type LoginFormValues } from "@/lib/validators";
 import { extractApiError } from "@/api/client";
 
-export default function LoginPage() {
-  const { login, loginWithOAuth, isAuthenticated } = useAuth();
+const signupSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type SignupFormValues = z.infer<typeof signupSchema>;
+
+export default function SignupPage() {
+  const { signup, loginWithOAuth, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,16 +26,16 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<SignupFormValues>({
+    resolver: zodResolver(signupSchema),
   });
 
   if (isAuthenticated) return <Navigate to="/" replace />;
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const onSubmit = async (data: SignupFormValues) => {
     setError(null);
     try {
-      await login(data.email, data.password);
+      await signup(data.email, data.password, data.fullName);
       navigate("/");
     } catch (err) {
       setError(extractApiError(err));
@@ -38,6 +46,7 @@ export default function LoginPage() {
     setError(null);
     setIsOAuthPending(provider);
     try {
+      // Standard demo OAuth account email generation for social sign-in
       const promptEmail = window.prompt(
         `Enter your ${provider === "google" ? "Google" : "GitHub"} email to test Social Authentication:`,
         provider === "google" ? "user@gmail.com" : "developer@github.com"
@@ -78,13 +87,13 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Login card */}
+        {/* Signup card */}
         <div className="glass-card-static p-8">
           <h2 className="text-xl font-semibold text-slate-100 mb-1">
-            Welcome back
+            Create an account
           </h2>
           <p className="text-sm text-slate-400 mb-6">
-            Sign in to access your workspace
+            Get started with your private contract workspace
           </p>
 
           {error && (
@@ -148,11 +157,32 @@ export default function LoginPage() {
               <div className="w-full border-t border-white/10" />
             </div>
             <span className="relative bg-[#0b0f19] px-3 text-xs text-slate-500 uppercase tracking-wider">
-              Or sign in with email
+              Or register with email
             </span>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-slate-300 mb-1.5"
+              >
+                Full Name
+              </label>
+              <input
+                id="fullName"
+                type="text"
+                placeholder="Jane Doe"
+                className="input-field"
+                {...register("fullName")}
+              />
+              {errors.fullName && (
+                <p className="mt-1.5 text-xs text-red-400">
+                  {errors.fullName.message}
+                </p>
+              )}
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -186,7 +216,7 @@ export default function LoginPage() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   placeholder="••••••••"
                   className="input-field pr-10"
                   {...register("password")}
@@ -218,17 +248,17 @@ export default function LoginPage() {
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : null}
-              {isSubmitting ? "Signing in…" : "Sign in"}
+              {isSubmitting ? "Creating account…" : "Create account"}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-slate-400">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              to="/signup"
+              to="/login"
               className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
             >
-              Sign up
+              Sign in
             </Link>
           </div>
         </div>

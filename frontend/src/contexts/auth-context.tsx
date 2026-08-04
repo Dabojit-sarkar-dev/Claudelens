@@ -7,13 +7,15 @@ import {
   type ReactNode,
 } from "react";
 import type { User } from "@/types/api";
-import { login as apiLogin, getMe } from "@/api/auth";
+import { login as apiLogin, signup as apiSignup, loginWithOAuth as apiLoginOAuth, getMe } from "@/api/auth";
 
 interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, fullName: string) => Promise<void>;
+  loginWithOAuth: (provider: "google" | "github", email: string, fullName?: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -45,6 +47,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(me);
   }, []);
 
+  const signup = useCallback(async (email: string, password: string, fullName: string) => {
+    const tokenRes = await apiSignup({ email, password, full_name: fullName });
+    localStorage.setItem("token", tokenRes.access_token);
+    const me = await getMe();
+    setUser(me);
+  }, []);
+
+  const loginWithOAuth = useCallback(async (provider: "google" | "github", email: string, fullName?: string) => {
+    const tokenRes = await apiLoginOAuth({ provider, email, full_name: fullName });
+    localStorage.setItem("token", tokenRes.access_token);
+    const me = await getMe();
+    setUser(me);
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     setUser(null);
@@ -57,6 +73,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         isLoading,
         login,
+        signup,
+        loginWithOAuth,
         logout,
       }}
     >
