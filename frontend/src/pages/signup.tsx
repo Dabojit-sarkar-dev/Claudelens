@@ -3,7 +3,7 @@ import { useNavigate, Navigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Shield, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { extractApiError } from "@/api/client";
 
@@ -76,9 +76,11 @@ export default function SignupPage() {
       <div className="relative w-full max-w-md animate-slide-up">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 mb-4 shadow-lg shadow-indigo-500/20">
-            <Shield className="h-8 w-8 text-white" />
-          </div>
+          <img
+            src="/clauselens.png"
+            alt="ClauseLens"
+            className="h-16 w-16 mx-auto mb-4 object-contain"
+          />
           <h1 className="text-3xl font-bold tracking-tight gradient-text">
             ClauseLens
           </h1>

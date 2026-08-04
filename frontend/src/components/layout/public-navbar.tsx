@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { Shield, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 
 export function PublicNavbar() {
@@ -23,9 +23,11 @@ export function PublicNavbar() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-              <Shield className="h-5 w-5 text-white" />
-            </div>
+            <img
+              src="/clauselens.png"
+              alt="ClauseLens"
+              className="h-9 w-9 object-contain group-hover:scale-105 transition-transform"
+            />
             <span className="text-lg font-bold tracking-tight gradient-text">
               ClauseLens
             </span>

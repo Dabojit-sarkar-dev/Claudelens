@@ -5,7 +5,6 @@ import {
   BarChart3,
   User as UserIcon,
   LogOut,
-  Shield,
   Info,
   BookOpen,
 } from "lucide-react";
@@ -34,9 +33,11 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Left: Brand Logo */}
         <NavLink to="/dashboard" className="flex items-center gap-3 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-            <Shield className="h-5 w-5 text-white" />
-          </div>
+          <img
+            src="/clauselens.png"
+            alt="ClauseLens"
+            className="h-9 w-9 object-contain group-hover:scale-105 transition-transform"
+          />
           <span className="text-lg font-bold tracking-tight gradient-text">
             ClauseLens
           </span>
