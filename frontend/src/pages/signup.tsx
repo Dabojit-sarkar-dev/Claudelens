@@ -79,7 +79,7 @@ export default function SignupPage() {
           <img
             src="/clauselens.png"
             alt="ClauseLens"
-            className="h-16 w-16 mx-auto mb-4 object-contain"
+            className="h-24 w-24 sm:h-28 sm:w-28 mx-auto mb-4 object-contain scale-110"
           />
           <h1 className="text-3xl font-bold tracking-tight gradient-text">
             ClauseLens

@@ -26,7 +26,7 @@ export function PublicNavbar() {
             <img
               src="/clauselens.png"
               alt="ClauseLens"
-              className="h-9 w-9 object-contain group-hover:scale-105 transition-transform"
+              className="h-11 w-11 sm:h-12 sm:w-12 object-contain scale-110 group-hover:scale-125 transition-transform"
             />
             <span className="text-lg font-bold tracking-tight gradient-text">
               ClauseLens
